@@ -6,11 +6,7 @@ package com.savan.genericDao;
  */
 public interface GenericDao<T> {
 	
-	/**
-	* 
-	* @param entity: entity to save
-	* @return Identifier of saved entity
-	*/
-	public void save(T entity);
+	//Insert Employee
+	public void saveEmployee(T entity);
 
 }
