@@ -40,7 +40,13 @@
 			<artifactId>jstl-api</artifactId>
 			<version>1.2</version>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		
 		<!-- Spring -->
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
@@ -78,6 +84,21 @@
 		    <version>5.2.5.RELEASE</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>5.2.5.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api -->
+		<dependency>
+		    <groupId>javax.annotation</groupId>
+		    <artifactId>javax.annotation-api</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+		
+		
 
 		<!-- Hibernate -->
 
@@ -109,7 +130,15 @@
 		    <version>2.7.0</version>
 		</dependency>
 		
-
+		<!-- freemarker -->
+		
+		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+		<dependency>
+		    <groupId>org.freemarker</groupId>
+		    <artifactId>freemarker</artifactId>
+		    <version>2.3.29</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>EmployeeManager</finalName>

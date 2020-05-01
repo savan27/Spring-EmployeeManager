@@ -1,5 +1,7 @@
 package com.savan.daoImpl;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,15 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	//Save user data to data base
 	@Override
 	public void saveEmployee(Employee entity) {
-		System.out.println("inside the EmployeeDaoImpl");
 		getSession().persist(entity);
+	}
+
+	@Override
+	public List<Employee> getAllEmployee() {
+		
+		List<Employee> list = getSession().createQuery("from Employee").list();
+		
+		return list;
 	}
 
 	
