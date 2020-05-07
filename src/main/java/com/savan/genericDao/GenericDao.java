@@ -7,6 +7,8 @@ package com.savan.genericDao;
 public interface GenericDao<T> {
 	
 	//Insert Employee
-	public void saveEmployee(T entity);
+	public boolean save(T entity);
 
+	//Get entity Object by id
+	public T getById(int id);
 }

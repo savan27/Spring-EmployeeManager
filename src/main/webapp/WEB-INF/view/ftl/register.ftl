@@ -19,94 +19,93 @@
 			<div class="row">
 				<div class="col-md-8 m-auto d-block">
 					<h1 class="text-success text-center">
-					Registration Form 
+					${(user?has_content)?string('Update User Profile','Registration Form')}
 					</h1>
 				</div>
 			</div>
 			<br>
 			<div class="row">
 				<div class="col-md-8 m-auto d-block">
-					<form action="registerUser" method="post" class="bg-light"  id="Form" enctype="multipart/form-data" >
+					<form action="registerUser" method="post" class="bg-light"  id="Form" enctype="multipart/form-data" modelAttribute="AddressDto">
 						
 						<div class="form-group">
 							<br>
 							<div class="circle">
-								<img class="profile-pic" name="defaultImage" src="image/user-purple.png" />
-								<input type="hidden" name="defaultImageValue" value="" />
+								<img class="profile-pic" name="defaultImage" src="${(profilePicture?has_content)?string('data:image/gif;base64,${profilePicture!""}','image/user-purple.png')}" />
 							</div>
 							<label>Upload Profile Picture </label>
 							<i class="fa fa-camera upload-button"></i>
 							<div class="p-image">
-								<input class="file-upload" name="image_file" type="file" accept="image/*" id="File" onchange="imageValidate(this)" />
+								<input class="file-upload" name="File" type="file" accept="image/*" id="File" onchange="imageValidate(this)" />
 								<span id="FileError" class="text-danger font-weight-bold"></span>
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label>First Name</label>
-							<input type="text" name="firstNname" class="form-control" id="firstName1" autocomplete="off" onblur="FnameValidate(1)" value="">
+							<input type="text" name="firstName" class="form-control" id="firstName1" autocomplete="off" onblur="FnameValidate(1)" value="${(user.firstName)!""}" >
 							<span id="FnameError1" class="text-danger font-weight-bold"></span>
 						</div>
 
 						<div class="form-group">	
 							<label>Last Name</label>
-							<input type="text" name="lastNname" class="form-control" id="lastName1" autocomplete="off" onblur="LnameValidate(1)" value="">
+							<input type="text" name="lastName" class="form-control" id="lastName1" autocomplete="off" onblur="LnameValidate(1)" value="${(user.lastName)!""}">
 							<span id="LnameError1" class="text-danger font-weight-bold"></span>
 						</div>
 
 						<div class="form-group">
 							<label>Password</label>
-							<input type="password" name="password" class="form-control" id="password1" autocomplete="off"  onpaste="return false;" onblur="pwdValidate(1)" value="">
+							<input type="password" name="password" class="form-control" id="password1" autocomplete="off"  onpaste="return false;" onblur="pwdValidate(1)" value="${(user.password)!""}">
 							<span id="PasswordError1" class="text-danger font-weight-bold"></span>
 						</div>
 
 						<div class="form-group">
 							<label>Confirm Password</label>
-							<input type="password" name="Cpassword" class="form-control" id="confirmPassword1" autocomplete="off"  onpaste="return false;" onblur="cpwdValidate(1)" value="">
+							<input type="password" name="Cpassword" class="form-control" id="confirmPassword1" autocomplete="off"  onpaste="return false;" onblur="cpwdValidate(1)" value="${(user.password)!""}">
 							<span id="CpasswordError1" class="text-danger font-weight-bold"></span>
 						</div>
 
 						<div class="form-group">
 							<label>Email Address</label>
-							<input type="text" name="email" class="form-control" id="Email1" autocomplete="off" onblur="emailValidate(1)" value="">
+							<input type="text" name="email" class="form-control" id="Email1" autocomplete="off" onblur="emailValidate(1)" value="${(user.email)!""}">
 							<span id="EmailError1" class="text-danger font-weight-bold"></span>
 						</div>
 
 						<div class="form-group">
 							<label>Contact No.</label>
-							<input type="text" name="contact" class="form-control" id="Contact1" autocomplete="off" onblur="conValidate(1)" value="">
+							<input type="text" name="contact" class="form-control" id="Contact1" autocomplete="off" onblur="conValidate(1)" value="${(user.contact)!""}">
 							<span id="ContactError1" class="text-danger font-weight-bold"></span>
 						</div>
-
+						<#assign gender= (user.gender)!"null"/>
 						<div class="form-group"> 
 							<label>Gender</label>
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="gender" id="male" value="male" >
+								<input class="form-check-input" type="radio" name="gender" id="male" value="male" <#if gender == "male">checked</#if> >
 								<label class="form-check-label" >
 									Male
 								</label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" type="radio" name="gender" id="female" value="female" >
+								<input class="form-check-input" type="radio" name="gender" id="female" value="female" <#if gender == "female">checked</#if> >
 								<label class="form-check-label" >
 									Female
 								</label>
 							</div>
 						</div>
-
+						<#assign permission= (user.permission)!"null"/>
 						<div class="form-group">
 							<label>Select Permission</label><br>
-							<input type="checkbox" name="permission" value="Read" >	Read
-							<input type="checkbox" name="permission" value="Write" >Write
-							<input type="checkbox" name="permission" value="Execute" >Execute
+							<input type="checkbox" name="permission" value="Read" <#if permission?contains("Read")>checked</#if> >	Read
+							<input type="checkbox" name="permission" value="Write" <#if permission?contains("Write")>checked</#if>  > Write
+							<input type="checkbox" name="permission" value="Execute" <#if permission?contains("Execute")>checked</#if>  >Execute
 						</div>
-
+						<#assign hobbies= (user.hobbies)!"null"/>
 						<div class="form-group">
 							<label>Select You Like</label><br>
-							<select name="hobby" id="t">
-							    <option value="Read" >Read</option>
-							    <option value="Write" >Write</option>
-							    <option value="Executeid" >Execute</option>
+							<select name="hobbies" id="t">
+							    <option value="Read" ${(hobbies == 'Read')?string('selected','')} >Read</option>
+							    <option value="Write" ${(hobbies == 'Write')?string('selected','')} >Write</option>
+							    <option value="Executeid" ${(hobbies == 'Executeid')?string('selected','')} >Execute</option>
 						    </select>
 						</div>
 
@@ -122,28 +121,28 @@
 									</div>						
 			
 									<div class="form-group">
-										<input type="text" name="leandmark" class="form-control" id="landmark1" autocomplete="off" placeholder="Address Line2" onblur="StreetValidate(1)" value="">
+										<input type="text" name="street" class="form-control" id="landmark1" autocomplete="off" placeholder="Address Line2" onblur="StreetValidate(1)" value="">
 										<span id="Landmark2Error1" class="text-danger font-weight-bold"></span>
 									</div>
 									
 									<div class="row">
 										<div class="col-md-6">
-											<input type="text" name="City" class="form-control" id="City1" autocomplete="off" placeholder="City" onblur="CityValidate(1)" value="">
+											<input type="text" name="city" class="form-control" id="City1" autocomplete="off" placeholder="City" onblur="CityValidate(1)" value="">
 											<span id="CityError1" class="text-danger font-weight-bold"></span>
 										</div>
 										<div class="col-md-6">
-											<input type="text" name="State" class="form-control" id="State1" autocomplete="off" placeholder="State" onblur="StateValidate(1)" value="" >
+											<input type="text" name="state" class="form-control" id="State1" autocomplete="off" placeholder="State" onblur="StateValidate(1)" value="" >
 											<span id="StateError1" class="text-danger font-weight-bold"></span>
 										</div>
 									</div>
 									<br>
 									<div class="row">
 										<div class="col-md-6">
-											<input type="text" name="Country" class="form-control" id="Country1" autocomplete="off" placeholder="Country" onblur="CountryValidate(1)" value="">
+											<input type="text" name="country" class="form-control" id="Country1" autocomplete="off" placeholder="Country" onblur="CountryValidate(1)" value="">
 											<span id="CountryError1" class="text-danger font-weight-bold"></span>
 										</div>
 										<div class="col-md-6">
-											<input type="text" name="ZipCode" class="form-control" id="ZipCode1" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(1)" value="">
+											<input type="text" name="zipcode" class="form-control" id="ZipCode1" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(1)" value="">
 											<span id="ZipCodeError1" class="text-danger font-weight-bold"></span>
 										</div>
 									</div>
@@ -211,12 +210,9 @@
 							
 						</div>
 						
-						<br>	
-						
-						
 						<span style="color:red" id="errMassage" class="text-danger font-weight-bold">${errMassage ! ""}</span><br>
 						<button type="submit" name="operation" value="Register" class="btn btn-success" form="Form" id="btn-submit" <#-- onclick="return validation(1);" -->>
-							Register
+							${(user?has_content)?string('Update','Register')}
 						</button>
 						<button class="btn btn-danger" name="operation" value="cancel">
 							Cancel

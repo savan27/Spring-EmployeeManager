@@ -8,6 +8,9 @@ package com.savan.genericService;
 public interface GenericService<T> {
 	
 	//Insert Employee
-	public void saveEmployee(T entity);
+	public boolean save(T entity);
+	
+	//Get entity Object by id
+	public T getById(int id);
 
 }

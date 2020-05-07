@@ -22,12 +22,12 @@
 			<br>
 			<div class="row">
 				<div class="col-md-8 m-auto d-block">
-					<form class="bg-light" action="profile" method="post">
+					<form class="bg-light" action="afterLogin" method="post">
 						<span>${loginMsg ! ""}</span> <br>
 						<br>
 						<div class="form-group">
 							<label>User Name</label> 
-							<input type="text" name="uname" class="form-control" autocomplete="off">
+							<input type="text" name="userName" class="form-control" autocomplete="off">
 						</div>
 
 						<div class="form-group">

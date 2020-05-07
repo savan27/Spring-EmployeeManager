@@ -53,4 +53,14 @@ public class RoleDaoImpl implements RoleDao {
 		return false;
 	}
 
+	@Override
+	public Role findByRole(String roleName) {
+		
+		String HQL = " from Role r where r.role =:rolee";
+		Query<Role> q = getSession().createQuery(HQL);
+		q.setParameter("rolee", roleName);
+			
+		return q.uniqueResult();
+	}
+
 }

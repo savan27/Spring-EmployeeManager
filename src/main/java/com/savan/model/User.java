@@ -1,12 +1,18 @@
 package com.savan.model;
 
+
+import java.util.Arrays;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,13 +25,13 @@ import javax.persistence.Table;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "user_id",length = 10)
 	private int id;
 	
 	@Column(name = "first_name",nullable = false,length = 30)
 	private String firstName;
-	
+
 	@Column(name = "last_name",nullable = false,length = 30)
 	private String lastName;
 	
@@ -46,10 +52,16 @@ public class User {
 	
 	@Column(name = "hobbies",nullable = true,length = 30)
 	private String hobbies;
+	
+	@Column(name = "profile_picture", nullable = true)
+	private byte[] profilePicture;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "role_id")
 	private Role role;
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER,targetEntity = Address.class)
+	private List<Address> address;
 
 	/**
 	 * @return the id
@@ -178,6 +190,20 @@ public class User {
 	}
 
 	/**
+	 * @return the profilePicture
+	 */
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
+
+	/**
+	 * @param profilePicture the profilePicture to set
+	 */
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	/**
 	 * @return the role
 	 */
 	public Role getRole() {
@@ -189,6 +215,28 @@ public class User {
 	 */
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	/**
+	 * @return the address
+	 */
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(List<Address> address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", email=" + email + ", contact=" + contact + ", gender=" + gender + ", permission=" + permission
+				+ ", hobbies=" + hobbies + ", profilePicture=" + Arrays.toString(profilePicture) + ", role=" + role
+				+ ", address=" + address + "]";
 	}
 	
 }

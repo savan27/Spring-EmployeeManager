@@ -14,5 +14,8 @@ public interface RoleDao {
 	//insert role again
 	boolean insert(Role role);
 
+	//find Role by name
+	Role findByRole(String roleName);
+
 
 }
