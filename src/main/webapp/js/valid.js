@@ -569,46 +569,46 @@ function conValidate(id) {
 }
 
 function HomeValidate(id) {
-	var name = document.getElementById('house'+id).value;
-
+	var name = document.getElementById(id+'.house').value;
+	console.log(name)
 	var v = name.trim();
 
 	if (v == "") {
-		document.getElementById('HouseError'+id).innerHTML = "* Required Field !!!";
+		document.getElementById(id+'.HouseError').innerHTML = "* Required Field !!!";
 	}
 	else if ((v.length < 4) || (v.length > 30)) {
-		document.getElementById('HouseError'+id).innerHTML = "* Length should be 5 to 30 character !!!";
+		document.getElementById(id+'.HouseError').innerHTML = "* Length should be 5 to 30 character !!!";
 		return false;
 	}
 	else
 	{
-		document.getElementById('HouseError'+id).innerHTML = "";
+		document.getElementById(id+'.HouseError').innerHTML = "";
 		return false;
 	}
 	
 }
 
 function StreetValidate(id) {
-	var name = document.getElementById('landmark'+id).value;
+	var name = document.getElementById(id+'.landmark').value;
 
 	var v = name.trim();
 
 	if (v == "") {
-		document.getElementById('Landmark2Error'+id).innerHTML = "* Required Field !!!";
+		document.getElementById(id+'.Landmark2Error').innerHTML = "* Required Field !!!";
 	}
 	else if ((v.length < 4) || (v.length > 30)) {
-		document.getElementById('Landmark2Error'+id).innerHTML = "* Length should be 5 to 30 character !!!";
+		document.getElementById(id+'.Landmark2Error').innerHTML = "* Length should be 5 to 30 character !!!";
 		return false;
 	}
 	else
 	{
-		document.getElementById('Landmark2Error'+id).innerHTML = "";
+		document.getElementById(id+'.Landmark2Error').innerHTML = "";
 		return false;
 	}
 }
 
 function CityValidate(id) {
-	var fname = document.getElementById('City'+id).value;
+	var fname = document.getElementById(id+'.City').value;
 
 	var v = fname.trim();
 
@@ -628,35 +628,35 @@ function CityValidate(id) {
 
 	if(v =="")
 	{
-		document.getElementById('CityError'+id).innerHTML="* Required Field !!!";
+		document.getElementById(id+'.CityError').innerHTML="* Required Field !!!";
 		return false;
 	}
 	if ((v.length < 5) || (v.length >= 10)) {
-		document.getElementById('CityError'+id).innerHTML = "* Length should be 5 to 10 character !!!";
+		document.getElementById(id+'.CityError').innerHTML = "* Length should be 5 to 10 character !!!";
 		return false;
 	}
 	if(v.split(' ').length > 1)
 	{
-		document.getElementById('CityError'+id).innerHTML="* Invalid : Space between name";
+		document.getElementById(id+'.CityError').innerHTML="* Invalid : Space between name";
 		return false;
 	}
 	if (number) {
-		document.getElementById('CityError'+id).innerHTML="* Number Not Allowed..!!!";
+		document.getElementById(id+'.CityError').innerHTML="* Number Not Allowed..!!!";
 		return false;
 	}
 	if (specialcaseLetter) {
-		document.getElementById('CityError'+id).innerHTML="* Character input only..!!!";
+		document.getElementById(id+'.CityError').innerHTML="* Character input only..!!!";
 		return false;
 	}
 	else
 	{
-		document.getElementById('CityError'+id).innerHTML = "";
+		document.getElementById(id+'.CityError').innerHTML = "";
 		return false;
 	}
 }
 
 function StateValidate(id) {
-	var fname = document.getElementById('State'+id).value;
+	var fname = document.getElementById(id+'.State').value;
 
 	var v = fname.trim();
 
@@ -676,35 +676,35 @@ function StateValidate(id) {
 
 	if(v =="")
 	{
-		document.getElementById('StateError'+id).innerHTML="* Required Field !!!";
+		document.getElementById(id+'.StateError').innerHTML="* Required Field !!!";
 		return false;
 	}
 	if ((v.length < 5) || (v.length >= 10)) {
-		document.getElementById('StateError'+id).innerHTML = "* Length should be 5 to 10 character !!!";
+		document.getElementById(id+'.StateError').innerHTML = "* Length should be 5 to 10 character !!!";
 		return false;
 	}
 	if(v.split(' ').length > 1)
 	{
-		document.getElementById('StateError'+id).innerHTML="* Invalid : Space between name";
+		document.getElementById(id+'.StateError').innerHTML="* Invalid : Space between name";
 		return false;
 	}
 	if (number) {
-		document.getElementById('StateError'+id).innerHTML="* Number Not Allowed..!!!";
+		document.getElementById(id+'.StateError').innerHTML="* Number Not Allowed..!!!";
 		return false;
 	}
 	if (specialcaseLetter) {
-		document.getElementById('StateError'+id).innerHTML="* Character input only..!!!";
+		document.getElementById(id+'.StateError').innerHTML="* Character input only..!!!";
 		return false;
 	}
 	else
 	{
-		document.getElementById('StateError'+id).innerHTML = "";
+		document.getElementById(id+'.StateError').innerHTML = "";
 		return false;
 	}
 }
 
 function CountryValidate(id) {
-	var fname = document.getElementById('Country'+id).value;
+	var fname = document.getElementById(id+'.Country').value;
 
 	var v = fname.trim();
 
@@ -724,61 +724,61 @@ function CountryValidate(id) {
 
 	if(v =="")
 	{
-		document.getElementById('CountryError'+id).innerHTML="* Required Field !!!";
+		document.getElementById(id+'.CountryError').innerHTML="* Required Field !!!";
 		return false;
 	}
 	if ((v.length < 4) || (v.length >= 10)) {
-		document.getElementById('CountryError'+id).innerHTML = "* Length should be 4 to 10 character !!!";
+		document.getElementById(id+'.CountryError').innerHTML = "* Length should be 4 to 10 character !!!";
 		return false;
 	}
 	if(v.split(' ').length > 1)
 	{
-		document.getElementById('CountryError'+id).innerHTML="* Invalid : Space between name";
+		document.getElementById(id+'.CountryError').innerHTML="* Invalid : Space between name";
 		return false;
 	}
 	if (number) {
-		document.getElementById('CountryError'+id).innerHTML="* Number Not Allowed..!!!";
+		document.getElementById(id+'.CountryError').innerHTML="* Number Not Allowed..!!!";
 		return false;
 	}
 	if (specialcaseLetter) {
-		document.getElementById('CountryError'+id).innerHTML="* Character input only..!!!";
+		document.getElementById(id+'.CountryError').innerHTML="* Character input only..!!!";
 		return false;
 	}
 	else
 	{
-		document.getElementById('CountryError'+id).innerHTML = "";
+		document.getElementById(id+'.CountryError').innerHTML = "";
 		return false;
 	}
 }
 
 function ZipCodeValidate(id) {
 
-	var name = document.getElementById('ZipCode'+id).value;
+	var name = document.getElementById(id+'.ZipCode').value;
 
 	var v = name.trim();
 
 	if(v =="")
 	{
-		document.getElementById('ZipCodeError'+id).innerHTML="* Required Field !!!";
+		document.getElementById(id+'.ZipCodeError').innerHTML="* Required Field !!!";
 		return false;
 	}
 	else if(v.split(' ').length > 1)
 	{
-		document.getElementById('ZipCodeError'+id).innerHTML="* Invalid : Space between Number...!!!";
+		document.getElementById(id+'.ZipCodeError').innerHTML="* Invalid : Space between Number...!!!";
 		return false;
 	}
 	else if ((v.length <= 5) || (v.length > 10)) {
-		document.getElementById('ZipCodeError'+id).innerHTML = "* Length should be 6 to 10 digits only....!!!";
+		document.getElementById(id+'.ZipCodeError').innerHTML = "* Length should be 6 to 10 digits only....!!!";
 		return false;
 	}
 	else if(isNaN(v))
 	{
-		document.getElementById('ZipCodeError'+id).innerHTML="**Please enter the number only";
+		document.getElementById(id+'.ZipCodeError').innerHTML="**Please enter the number only";
 		return false;
 	}
 	else
 	{
-		document.getElementById('ZipCodeError'+id).innerHTML="";
+		document.getElementById(id+'.ZipCodeError').innerHTML="";
 		return false;
 	}
 }

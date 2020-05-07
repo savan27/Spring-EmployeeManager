@@ -110,44 +110,46 @@
 						</div>
 
 					<!-- manage address for existing user or new one -->
-								<div>
-									<div class="form-group">
-										<label>Address 1:</label>
-										<span style="float: right;" id="addAddress1"><i class="fa fa-plus"></i></span>
-										<pre style="float: right;"> | </pre>
-										<span style="float: right;" id="removeAddress1"><i class="fa fa-minus"></i></span>
-										<input type="text" name="home" class="form-control" id="house1" autocomplete="off" placeholder="Address Line1" onblur="HomeValidate(1)" value="">
-										<span id="HouseError1" class="text-danger font-weight-bold"></span>
-									</div>						
-			
-									<div class="form-group">
-										<input type="text" name="street" class="form-control" id="landmark1" autocomplete="off" placeholder="Address Line2" onblur="StreetValidate(1)" value="">
-										<span id="Landmark2Error1" class="text-danger font-weight-bold"></span>
-									</div>
-									
-									<div class="row">
-										<div class="col-md-6">
-											<input type="text" name="city" class="form-control" id="City1" autocomplete="off" placeholder="City" onblur="CityValidate(1)" value="">
-											<span id="CityError1" class="text-danger font-weight-bold"></span>
-										</div>
-										<div class="col-md-6">
-											<input type="text" name="state" class="form-control" id="State1" autocomplete="off" placeholder="State" onblur="StateValidate(1)" value="" >
-											<span id="StateError1" class="text-danger font-weight-bold"></span>
-										</div>
-									</div>
-									<br>
-									<div class="row">
-										<div class="col-md-6">
-											<input type="text" name="country" class="form-control" id="Country1" autocomplete="off" placeholder="Country" onblur="CountryValidate(1)" value="">
-											<span id="CountryError1" class="text-danger font-weight-bold"></span>
-										</div>
-										<div class="col-md-6">
-											<input type="text" name="zipcode" class="form-control" id="ZipCode1" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(1)" value="">
-											<span id="ZipCodeError1" class="text-danger font-weight-bold"></span>
-										</div>
-									</div>
-								</div>	
-						       
+					<div id="example1" class="controls">
+						<div class="list-item">
+		                    <div class="form-group">
+		                        <span style="float: right;color: red" class="list-remove"><i class="fa fa-times"></i></span>
+		                        <input type="text" name="address[0].home" class="form-control" id="0.house" autocomplete="off" placeholder="Home,Flate Name" onblur="HomeValidate(0.)" value="">
+		                        <span id="0.HouseError" class="text-danger font-weight-bold"></span>
+		                    </div>
+		
+		                    <div class="form-group">
+		                        <input type="text" name="address[0].street" class="form-control" id="0.landmark" autocomplete="off" placeholder="Street,Locality,LandMark" onblur="StreetValidate(0.)" value="">
+		                        <span id="0.Landmark2Error" class="text-danger font-weight-bold"></span>
+		                    </div>
+		
+		                    <div class="row">
+		                        <div class="col-md-6">
+		                            <input type="text" name="address[0].city" class="form-control" id="0.City" autocomplete="off" placeholder="City" onblur="CityValidate(0.)" value="">
+		                            <span id="0.CityError" class="text-danger font-weight-bold"></span>
+		                        </div>
+		                        <div class="col-md-6">
+		                            <input type="text" name="address[0].state" class="form-control" id="0.State" autocomplete="off" placeholder="State" onblur="StateValidate(0.)" value="" >
+		                            <span id="0.StateError" class="text-danger font-weight-bold"></span>
+		                        </div>
+		                    </div>
+		                    <br>
+		                    <div class="row">
+		                        <div class="col-md-6">
+		                            <input type="text" name="address[0].country" class="form-control" id="0.Country" autocomplete="off" placeholder="Country" onblur="CountryValidate(0.)" value="">
+		                            <span id="0.CountryError" class="text-danger font-weight-bold"></span>
+		                        </div>
+		                        <div class="col-md-6">
+		                            <input type="text" name="address[0].zipcode" class="form-control" id="0.ZipCode" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(0.)" value="">
+		                            <span id="0.ZipCodeError" class="text-danger font-weight-bold"></span>
+		                        </div>
+		                    </div>
+		                </div>
+		                <br>
+		                <button class="btn btn-info list-add" value="addAddress">
+	                        Add Address
+	                    </button>
+					</div>       
 						 <#--    <c:otherwise>
 						    	<c:set var="count" value="1" scope="page" />
 								<c:forEach items="${address.addressList}" var="data">
@@ -228,10 +230,19 @@
 	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="js/popper.min.js"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
-	<script type="text/javascript" src="js/valid.js"></script>
+	<#-- <script type="text/javascript" src="js/valid.js"></script> -->
 	<script type="text/javascript" src="js/ajax.js"></script>
-	<script type="text/javascript" src="js/appendAddress.js"></script> 
+	<script type="text/javascript" src="js/jquery.dynamiclist.js"></script>
+	<#-- <script type="text/javascript" src="js/appendAddress.js"></script> --> 
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<#-- Dynamically address appending -->
+	<script>
+         (function($) {
+              $(document).ready(function() {
+                  $("#example1").dynamiclist();
+               });
+          })(jQuery);
+    </script>
 			
 </body>
 </html>

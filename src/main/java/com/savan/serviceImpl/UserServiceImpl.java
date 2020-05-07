@@ -29,11 +29,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean save(User entity) {
-		System.out.println("inside service method");
-		/* System.out.println(entity.getAddress().toString()); */
 		entity.setRole(roleService.findByRole(RoleType.USER.name()));
-		System.out.println("after roal added");
-		/* System.out.println(entity.getAddress().toString()); */
 		return userDao.save(entity);
 	}
 

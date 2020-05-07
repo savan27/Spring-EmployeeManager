@@ -45,7 +45,7 @@ public class RoleDaoImpl implements RoleDao {
 	//method to insert role 
 	@Override
 	public boolean insert(Role role) {
-		int ans = (int) getSession().save(role);
+		Integer ans = (Integer) getSession().save(role);
 		
 		if (ans > 0) {
 			return true;

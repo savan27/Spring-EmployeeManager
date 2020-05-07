@@ -29,10 +29,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean save(User entity) {
-		System.out.println("inside dao method");
-		/* System.out.println(entity.getAddress().toString()); */
-		int ans = (int) getSession().save(entity);
-		System.out.println("after query execution");
+		Integer ans = (Integer) getSession().save(entity);
+
 		if (ans > 0) {
 			return true;
 		}
