@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+
 /**
  * @author SAVAN
  *
@@ -60,7 +62,7 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER,targetEntity = Address.class)
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER,targetEntity = Address.class)
 	private List<Address> address;
 
 	/**

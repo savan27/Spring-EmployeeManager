@@ -35,7 +35,7 @@
 						</div>
 					</div>
 					<div class="col-md-2">
-						<a href="updateUser?id=${user.id!""}">
+						<a href="doUpdateUser?id=${user.id!""}">
 							<button type="button" class="profile-edit-btn" name="btnAddMore">
 								Edit Profile
 							</button>
@@ -121,6 +121,76 @@
 									</div>
 								</div>
 								<br>
+								 <#list user.address as address>
+									<div class="row">
+										<div class="col-md-6">
+											<label>Address ${address?counter}:</label>
+										</div>
+										<div class="col-md-6">
+											<div class="row">
+												<div class="col-md-4">
+													<label>House</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.home!""}
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>Street</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.street!""}
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>City</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.city!""}
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>State</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.state!""}
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>Country</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.country!""}
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<label>ZipCode</label>
+												</div>
+												<div class="col-md-8">
+													<p>
+														${address.zipcode!""}
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+								</#list> 
 							</div>
 						</div>
 					</div>

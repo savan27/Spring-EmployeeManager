@@ -26,12 +26,13 @@
 			<br>
 			<div class="row">
 				<div class="col-md-8 m-auto d-block">
-					<form action="registerUser" method="post" class="bg-light"  id="Form" enctype="multipart/form-data" modelAttribute="AddressDto">
+					<form action="${(user?has_content)?string('afterUserUpdate','registerUser')}" method="post" class="bg-light"  id="Form" enctype="multipart/form-data" modelAttribute="AddressDto">
 						
 						<div class="form-group">
 							<br>
 							<div class="circle">
 								<img class="profile-pic" name="defaultImage" src="${(profilePicture?has_content)?string('data:image/gif;base64,${profilePicture!""}','image/user-purple.png')}" />
+								<input type="hidden" name="profile" value="${profilePicture!""}" />
 							</div>
 							<label>Upload Profile Picture </label>
 							<i class="fa fa-camera upload-button"></i>
@@ -66,6 +67,7 @@
 						</div>
 
 						<div class="form-group">
+		
 							<label>Email Address</label>
 							<input type="text" name="email" class="form-control" id="Email1" autocomplete="off" onblur="emailValidate(1)" value="${(user.email)!""}">
 							<span id="EmailError1" class="text-danger font-weight-bold"></span>
@@ -109,111 +111,94 @@
 						    </select>
 						</div>
 
-					<!-- manage address for existing user or new one -->
-					<div id="example1" class="controls">
-						<div class="list-item">
-		                    <div class="form-group">
-		                        <span style="float: right;color: red" class="list-remove"><i class="fa fa-times"></i></span>
-		                        <input type="text" name="address[0].home" class="form-control" id="0.house" autocomplete="off" placeholder="Home,Flate Name" onblur="HomeValidate(0.)" value="">
-		                        <span id="0.HouseError" class="text-danger font-weight-bold"></span>
-		                    </div>
-		
-		                    <div class="form-group">
-		                        <input type="text" name="address[0].street" class="form-control" id="0.landmark" autocomplete="off" placeholder="Street,Locality,LandMark" onblur="StreetValidate(0.)" value="">
-		                        <span id="0.Landmark2Error" class="text-danger font-weight-bold"></span>
-		                    </div>
-		
-		                    <div class="row">
-		                        <div class="col-md-6">
-		                            <input type="text" name="address[0].city" class="form-control" id="0.City" autocomplete="off" placeholder="City" onblur="CityValidate(0.)" value="">
-		                            <span id="0.CityError" class="text-danger font-weight-bold"></span>
-		                        </div>
-		                        <div class="col-md-6">
-		                            <input type="text" name="address[0].state" class="form-control" id="0.State" autocomplete="off" placeholder="State" onblur="StateValidate(0.)" value="" >
-		                            <span id="0.StateError" class="text-danger font-weight-bold"></span>
-		                        </div>
-		                    </div>
-		                    <br>
-		                    <div class="row">
-		                        <div class="col-md-6">
-		                            <input type="text" name="address[0].country" class="form-control" id="0.Country" autocomplete="off" placeholder="Country" onblur="CountryValidate(0.)" value="">
-		                            <span id="0.CountryError" class="text-danger font-weight-bold"></span>
-		                        </div>
-		                        <div class="col-md-6">
-		                            <input type="text" name="address[0].zipcode" class="form-control" id="0.ZipCode" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(0.)" value="">
-		                            <span id="0.ZipCodeError" class="text-danger font-weight-bold"></span>
-		                        </div>
-		                    </div>
-		                </div>
-		                <br>
-		                <button class="btn btn-info list-add" value="addAddress">
-	                        Add Address
-	                    </button>
-					</div>       
-						 <#--    <c:otherwise>
-						    	<c:set var="count" value="1" scope="page" />
-								<c:forEach items="${address.addressList}" var="data">
-									<div>
-										<div class="form-group">
-											<label>Address ${count}:</label>
-											<span style="float: right;" id="addAddress${data.AddressId}"><i class="fa fa-plus"></i></span>
-											<pre style="float: right;"> | </pre>
-											<span style="float: right;" id="removeAddress${data.AddressId}"><i class="fa fa-minus"></i></span>
-											<input type="text" name="home" class="form-control" id="house${count}" autocomplete="off" placeholder="Address Line1" onblur="HomeValidate(${count ! ""})" value="">
-											<span id="HouseError${count}" class="text-danger font-weight-bold"></span>
-											<span>${address1Err}</span>
-										</div>						
+						<!-- manage address for existing user or new one -->
+						<div id="example1" class="controls">
+							<#if (user?has_content)>
+								<#list user.address as address>
+									<div class="list-item">
+					                    <div class="form-group">
+					                        <span style="float: right;color: red" class="list-remove"><i class="fa fa-times"></i></span>
+					                        <input type="text" name="address[${address?index}].home" class="form-control" id="${address?index}.house" autocomplete="off" placeholder="Home,Flate Name" onblur="HomeValidate(${address?index}.)" value="${address.home!""}">
+					                        <span id="${address?index}.HouseError" class="text-danger font-weight-bold"></span>
+					                    </div>
+					
+					                   <div class="form-group">
+					                        <input type="text" name="address[${address?index}].street" class="form-control" id="${address?index}.landmark" autocomplete="off" placeholder="Street,Locality,LandMark" onblur="StreetValidate(${address?index}.)" value="${address.street!""}">
+					                        <span id="${address?index}.Landmark2Error" class="text-danger font-weight-bold"></span>
+					                    </div>
+					
+					                    <div class="row">
+					                        <div class="col-md-6">
+					                            <input type="text" name="address[${address?index}].city" class="form-control" id="${address?index}.City" autocomplete="off" placeholder="City" onblur="CityValidate(${address?index}.)" value="${address.city!""}">
+					                            <span id="${address?index}.CityError" class="text-danger font-weight-bold"></span>
+					                        </div>
+					                        <div class="col-md-6">
+					                            <input type="text" name="address[${address?index}].state" class="form-control" id="${address?index}.State" autocomplete="off" placeholder="State" onblur="StateValidate(${address?index}.)" value="${address.state!""}" >
+					                            <span id="${address?index}.StateError" class="text-danger font-weight-bold"></span>
+					                        </div>
+					                    </div>
+					                    <br>
+					                    <div class="row">
+					                        <div class="col-md-6">
+					                            <input type="text" name="address[${address?index}].country" class="form-control" id="${address?index}.Country" autocomplete="off" placeholder="Country" onblur="CountryValidate(${address?index}.)" value="${address.country!""}">
+					                            <span id="${address?index}.CountryError" class="text-danger font-weight-bold"></span>
+					                        </div>
+					                        <div class="col-md-6">
+					                            <input type="text" name="address[${address?index}].zipcode" class="form-control" id="${address?index}.ZipCode" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(${address?index}.)" value="${address.zipcode!""}">
+					                            <span id="${address?index}.ZipCodeError" class="text-danger font-weight-bold"></span>
+					                        </div>
+					                    </div>
+					                    <input type="hidden" name="address[${address?index}].id" value="${address.id}" />
+					                </div>
+								</#list>
+				            <#else>
+								<div class="list-item">
+				                    <div class="form-group">
+				                        <span style="float: right;color: red" class="list-remove"><i class="fa fa-times"></i></span>
+				                        <input type="text" name="address[0].home" class="form-control" id="0.house" autocomplete="off" placeholder="Home,Flate Name" onblur="HomeValidate(0.)" >
+				                        <span id="0.HouseError" class="text-danger font-weight-bold"></span>
+				                    </div>
 				
-										<div class="form-group">
-											<input type="text" name="leandmark" class="form-control" id="landmark${count}" autocomplete="off" placeholder="Address Line2" onblur="StreetValidate(${count})" value="">
-											<span id="Landmark2Error${count}" class="text-danger font-weight-bold"></span>
-											<span >${address2Err}</span>
-										</div>
-										
-										<div class="row">
-											<div class="col-md-6">
-												<input type="text" name="City" class="form-control" id="City${count}" autocomplete="off" placeholder="City" onblur="CityValidate(${count})" value="">
-												<span id="CityError${count}" class="text-danger font-weight-bold"></span>
-												<span >${cityErr}</span>
-											</div>
-											<div class="col-md-6">
-												<input type="text" name="State" class="form-control" id="State${count}" autocomplete="off" placeholder="State" onblur="StateValidate(${count})" value="">
-												<span id="StateError${count}" class="text-danger font-weight-bold"></span>
-												<span >${stateErr}</span>
-											</div>
-										</div>
-										<br>
-										<div class="row">
-											<div class="col-md-6">
-												<input type="text" name="Country" class="form-control" id="Country${count}" autocomplete="off" placeholder="Country" onblur="CountryValidate(${count})" value="">
-												<span id="CountryError${count}" class="text-danger font-weight-bold"></span>
-												<span>${countryErr}</span>
-											</div>
-											<div class="col-md-6">
-												<input type="text" name="ZipCode" class="form-control" id="ZipCode${count}" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(${count})" value="">
-												<span id="ZipCodeError${count}" class="text-danger font-weight-bold"></span>
-												<span >${zipCodeErr}</span>
-											</div>
-										</div>
-										<input type="hidden" name="addressId" value="${data.AddressId}" />
-										<br>
-									</div>
-									<!-- increment the count 
-									<c:set var="count" value="${count + 1}" scope="page"/>
-								</c:forEach>
-								<!-- get the last count 
-								<input type="hidden" id="addressCount" value="${count ! ""}">
-						    </c:otherwise>
-						</c:choose> -->
+				                    <div class="form-group">
+				                        <input type="text" name="address[0].street" class="form-control" id="0.landmark" autocomplete="off" placeholder="Street,Locality,LandMark" onblur="StreetValidate(0.)" >
+				                        <span id="0.Landmark2Error" class="text-danger font-weight-bold"></span>
+				                    </div>
+				
+				                    <div class="row">
+				                        <div class="col-md-6">
+				                            <input type="text" name="address[0].city" class="form-control" id="0.City" autocomplete="off" placeholder="City" onblur="CityValidate(0.)" >
+				                            <span id="0.CityError" class="text-danger font-weight-bold"></span>
+				                        </div>
+				                        <div class="col-md-6">
+				                            <input type="text" name="address[0].state" class="form-control" id="0.State" autocomplete="off" placeholder="State" onblur="StateValidate(0.)"  >
+				                            <span id="0.StateError" class="text-danger font-weight-bold"></span>
+				                        </div>
+				                    </div>
+				                    <br>
+				                    <div class="row">
+				                        <div class="col-md-6">
+				                            <input type="text" name="address[0].country" class="form-control" id="0.Country" autocomplete="off" placeholder="Country" onblur="CountryValidate(0.)" >
+				                            <span id="0.CountryError" class="text-danger font-weight-bold"></span>
+				                        </div>
+				                        <div class="col-md-6">
+				                            <input type="text" name="address[0].zipcode" class="form-control" id="0.ZipCode" autocomplete="off" placeholder="ZipCode" onblur="ZipCodeValidate(0.)" >
+				                            <span id="0.ZipCodeError" class="text-danger font-weight-bold"></span>
+				                        </div>
+				                    </div>
+				                </div>
+							</#if>
+				            <br>
+				            <button class="btn btn-info list-add" value="addAddress">
+			                   Add Address
+			                </button>
+						</div>       
 						
-						
-						<!-- New address Append Here -->
-						<div class="new_address_wrap">
-							
-						</div>
+						<#-- user data to manage updatation -->
+						<input type="hidden" name="userId" value="${(user.id)!""}" />
+						<input type="hidden" name="userRole" value="${(user.role.role)!""}" />
 						
 						<span style="color:red" id="errMassage" class="text-danger font-weight-bold">${errMassage ! ""}</span><br>
-						<button type="submit" name="operation" value="Register" class="btn btn-success" form="Form" id="btn-submit" <#-- onclick="return validation(1);" -->>
+						<button type="submit" name="operation" value="Register" class="btn btn-success" form="Form" id="btn-submit" onclick="return validation(1);">
 							${(user?has_content)?string('Update','Register')}
 						</button>
 						<button class="btn btn-danger" name="operation" value="cancel">
@@ -230,10 +215,9 @@
 	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src="js/popper.min.js"></script>
 	<script type="text/javascript" src="js/custom.js"></script>
-	<#-- <script type="text/javascript" src="js/valid.js"></script> -->
+	<script type="text/javascript" src="js/valid.js"></script> 
 	<script type="text/javascript" src="js/ajax.js"></script>
 	<script type="text/javascript" src="js/jquery.dynamiclist.js"></script>
-	<#-- <script type="text/javascript" src="js/appendAddress.js"></script> --> 
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<#-- Dynamically address appending -->
 	<script>

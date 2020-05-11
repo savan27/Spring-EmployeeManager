@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.savan.dto.AddressDto;
+import com.savan.dto.UserDto;
 import com.savan.model.Address;
+import com.savan.model.Role;
 import com.savan.model.User;
+import com.savan.service.RoleService;
 import com.savan.service.UserService;
 
 
@@ -31,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	@GetMapping("/register")
 	public String register() {
@@ -53,14 +59,12 @@ public class UserController {
 		
 		// address manipulation as per mapping
 		address.getAddress().stream().forEach(addr -> {
-			System.out.println(addr.toString());
-
 			// set user to address
 			addr.setUser(u);
-
-			// add address to user
-			u.getAddress().add(addr);
 		});
+		
+		//setting updated address to user
+		u.setAddress(address.getAddress());
 		
 		//save user 
 		if (userService.save(u)) {
@@ -71,19 +75,26 @@ public class UserController {
 	}
 
 	@PostMapping("/afterLogin")
-	public String profile(@RequestAttribute("user") User u, Model m, Address add) {
-		u.getAddress().forEach(System.out::println);
+	public String profile(@RequestAttribute("user") Integer id, Model m, Address add) {
+		
+		//getting user data from the database
+		User u = userService.getById(id);
 
 		// Converting Image to Base64 String
-		String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
+		if (u.getProfilePicture() != null) {
+			String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
+			
+			m.addAttribute("profilePicture", base64Image);
+		}
 
+		// add user object to model
 		m.addAttribute("user", u);
-		m.addAttribute("profilePicture", base64Image);
-		return "profile";
+		
+		return "userProfile";
 	}
 
-	@GetMapping("/updateUser")
-	public String updateUser(@RequestParam("id") int id, Model m) {
+	@GetMapping("/doUpdateUser")
+	public String doupdateUser(@RequestParam("id") int id, Model m) {
 
 		// get the user data
 		 User u = userService.getById(id);
@@ -94,6 +105,60 @@ public class UserController {
 		m.addAttribute("user", u);
 		m.addAttribute("profilePicture", base64Image);
 		return "register";
+	}
+	
+	@PostMapping("/afterUserUpdate")
+	public String afterUserUpdate(User u,UserDto udto,AddressDto address) {
+		
+		// Manipulation of profile picture
+		try {
+			MultipartFile file = udto.getFile();
+			if (file != null && file.getSize() > 0) {
+				byte[] fileImage = file.getBytes();
+				u.setProfilePicture(fileImage);
+			} else {
+				byte[] Image = Base64.getDecoder().decode(udto.getProfile());
+				u.setProfilePicture(Image);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// set user id
+		u.setId(udto.getUserId());
+		
+		//set user Role
+		u.setRole(roleService.findByRole(udto.getUserRole()));
+		
+		//clear the address from user
+		u.getAddress().clear();
+		
+		//get all existing address id's of user
+		List<Integer> existingAddressIds = userService.getAllAddresses(udto.getUserId());
+		
+		//Distinguish all addresses 
+		address.getAddress().stream().forEach(addr -> {
+			
+			// set user to address 
+			addr.setUser(u);
+			
+			//find addresses to remove 
+			if (existingAddressIds.contains(addr.getId())) {
+				existingAddressIds.remove(Integer.valueOf(addr.getId()));
+			}
+		});
+		
+		//setting updated address to user
+		u.setAddress(address.getAddress());
+
+		existingAddressIds.stream().forEach(System.out::println);
+		
+		//update user
+		if (userService.updateUser(u)) {
+			System.out.println("User is Updated Successfully...");
+		}
+
+		return "doUpdateUser?id=27";
 	}
 
 }

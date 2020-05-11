@@ -73,10 +73,16 @@
             var length = list.find("." + settings.itemClass).length;
             var item = alink.parents("." + settings.itemClass + ":first");
 
-            if (length == settings.minSize)
+            if (length == settings.minSize){
+            	alert("One Address required");
                 clearItem(item);
-            else
-                item.remove();
+            }
+            else{
+            	var result = confirm("Are you sure to delete?");
+            	if (result) {
+            		item.remove();
+				}
+            }
 
             normalizeList(list, settings);
 			
@@ -112,6 +118,7 @@
 
         // Clears value from all input text items.
         var clearItem = function(item) {
+        	item.find("input[type=hidden]").val("0");
             item.find("input[type=text], textarea").val("");
             item.find("input[type=radio]").attr({checked: false});
             item.find("input[type=checkbox]").attr({checked: false});
@@ -120,7 +127,7 @@
         var init = function(list) {
            
             // remove first item's remove link
-            list.find("." + settings.itemClass + ":first " + "." + settings.removeClass).hide()           
+            list.find("." + settings.itemClass + ":first " + "." + settings.removeClass).show()           
            
             // initializes the list
             var length = list.find("." + settings.itemClass).length;

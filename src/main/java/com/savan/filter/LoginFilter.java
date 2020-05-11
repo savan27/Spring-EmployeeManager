@@ -11,8 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.savan.model.User;
@@ -48,9 +46,9 @@ public class LoginFilter implements Filter {
 		if (userName != null && !userName.isEmpty() && password != null && !password.isEmpty()) {
 			
 			User u = userService.getUser(userName, password);
-			request.setAttribute("user", u);
 			
 			if (u != null) {
+				request.setAttribute("user", u.getId());
 				chain.doFilter(request, response);
 			} else {
 				System.out.println("good");
@@ -59,12 +57,6 @@ public class LoginFilter implements Filter {
 		else {
 			System.out.println("very Good");
 		}
-		
-		 
-		  
-		 
-		
 	}
-
 }
 

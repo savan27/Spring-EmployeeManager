@@ -1,5 +1,8 @@
 package com.savan.daoImpl;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -8,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.savan.dao.UserDao;
-import com.savan.model.Role;
+import com.savan.model.Address;
 import com.savan.model.User;
 
 /**
@@ -18,10 +21,10 @@ import com.savan.model.User;
 @Repository
 @Transactional
 public class UserDaoImpl implements UserDao {
-	
+
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	// get the current session
 	public Session getSession() {
 		return sessionFactory.getCurrentSession();
@@ -38,18 +41,13 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public User getById(int id) {
-		
-		String HQL = " from User u where u.id =:id";
-		Query<User> q = getSession().createQuery(HQL);
-		q.setParameter("id", id);
-		
-		return q.uniqueResult();
+	public User getById(Integer id) {
+		return getSession().get(User.class, id);
 	}
 
 	@Override
 	public User getUser(String userName, String password) {
-		
+
 		String HQL = " from User u where u.email =:email and u.password = :password";
 		Query<User> q = getSession().createQuery(HQL);
 		q.setParameter("email", userName);
@@ -57,4 +55,10 @@ public class UserDaoImpl implements UserDao {
 		return q.uniqueResult();
 	}
 
+	@Override
+	public boolean updateUser(User u) {
+		
+		getSession().saveOrUpdate(u);
+		return false;
+	}
 }

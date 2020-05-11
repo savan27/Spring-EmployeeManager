@@ -11,6 +11,6 @@ public interface GenericService<T> {
 	public boolean save(T entity);
 	
 	//Get entity Object by id
-	public T getById(int id);
+	public T getById(Integer id);
 
 }
