@@ -49,6 +49,7 @@ public class LoginFilter implements Filter {
 			
 			if (u != null) {
 				request.setAttribute("user", u.getId());
+				request.setAttribute("userRole", u.getRole().getRole());
 				chain.doFilter(request, response);
 			} else {
 				System.out.println("good");

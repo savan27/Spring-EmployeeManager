@@ -15,9 +15,8 @@ $(document).ready(function() {
 			
 			$.ajax({
 				type : "POST",
-				url : "RegisterController",
+				url : "removeUser",
 				data : {
-					operation : 'removeUser',
 					userId : $(this).val()
 				},
 				success : function(data) {

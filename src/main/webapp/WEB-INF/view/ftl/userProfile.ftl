@@ -1,4 +1,4 @@
-<html>
+	<html>
 <head>
 <meta charset="UTF-8">
 <title>profile</title>
@@ -11,14 +11,20 @@
 </head>
 <body>
 
+	<!-- validate session -->
+	<#assign role = (Session.userRole)!"null"/>
+	<#if  role != "USER"  >
+	asdfghjk
+		  ${response.sendRedirect("login.ftl")!}
+	</#if>
+
 	<!-- User data display starts -->
 		<div class="container emp-profile">
 			<form method="post">
 				<div class="row">
 					<div class="col-md-4">
 						<div class="profile-img">
-							<img src="data:image/gif;base64,${profilePicture!""}"
-								alt="profilePhoto" />
+							<img src="data:image/gif;base64,${profilePicture!""}" alt="profilePhoto" />
 						</div>
 					</div>
 					<div class="col-md-6">

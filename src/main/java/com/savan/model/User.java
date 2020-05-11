@@ -2,6 +2,7 @@ package com.savan.model;
 
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,8 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
+import javax.persistence.Transient;
 
 /**
  * @author SAVAN
@@ -58,13 +58,16 @@ public class User {
 	@Column(name = "profile_picture", nullable = true)
 	private byte[] profilePicture;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER,targetEntity = Address.class)
 	private List<Address> address;
 
+	@Transient
+	private String base64image;
+	
 	/**
 	 * @return the id
 	 */
@@ -231,6 +234,20 @@ public class User {
 	 */
 	public void setAddress(List<Address> address) {
 		this.address = address;
+	}
+	
+	/**
+	 * @return the base64image
+	 */
+	public String getBase64image() {
+		return base64image;
+	}
+
+	/**
+	 * @param base64image the base64image to set
+	 */
+	public void setBase64image(String base64image) {
+		this.base64image = base64image;
 	}
 
 	@Override

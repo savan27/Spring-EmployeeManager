@@ -8,39 +8,33 @@
 					<tr>
 						<th>User ID</th>
 						<th>First Name</th>
-						<th>Last name</th>
 						<th>Email</th>
 						<th>Contact</th>
 						<th>Profile</th>
 						<th>Gender</th>
-						<th>Permission</th>
-						<th>Hobbies</th>
 						<th>Manage User</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${sessionScope.userList}" var="user">
+					<#list userDetail as list >
 						<tr>
-							<td><c:out value="${user.userRId}" /></td>
-							<td><c:out value="${user.firstName}" /></td>
-							<td><c:out value="${user.lastName}" /></td>
-							<td><c:out value="${user.email}" /></td>
-							<td><c:out value="${user.contact}" /></td>
-							<td><img src="data:image/gif;base64,${user.displayImage}" alt="profilePhoto" width="70px" height="70px" /></td>
-							<td><c:out value="${user.gender}" /></td>
-							<td><c:out value="${user.permission}" /></td>
-							<td><c:out value="${user.hobbies}" /></td>
+							<td>${list.id!""}</td>
+							<td>${list.firstName!""}</td>
+							<td>${list.email!""}</td>
+							<td>${list.contact!""}</td>
+							<td><img src="data:image/gif;base64,${list.base64image!""}" alt="profilePhoto" width="70px" height="70px" /></td>
+							<td>${list.gender!""}</td>
 							<td>
-								<a href="RegisterController?role=admin&operaton=Update&id=<c:out value='${user.userRId}' />" style="color:white">
+								<a href="doUpdateUser?id=${list.id!""}" style="color:white">
 									<button class = "btn btn-sm btn-success btn">
 										Edit
 									</button>
 								</a> 
 								| 
-								<button id = "delbtn" value = '${user.userRId}' class = "btn btn-sm btn-danger btn"> Delete</button>
+								<button id = "delbtn" value = '${list.id!""}' class = "btn btn-sm btn-danger btn"> Delete</button>
 							</td>
 						</tr>
-					</c:forEach>
+					</#list>
 				</tbody>
 			</table>
 		</div>

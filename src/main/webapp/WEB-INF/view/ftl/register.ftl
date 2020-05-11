@@ -194,8 +194,8 @@
 						</div>       
 						
 						<#-- user data to manage updatation -->
-						<input type="hidden" name="userId" value="${(user.id)!""}" />
-						<input type="hidden" name="userRole" value="${(user.role.role)!""}" />
+						<input type="hidden" name="userId" value="${(user?has_content)?string('${(user.id)!""}','0')}" />
+						<input type="hidden" name="userRole" value="${(user?has_content)?string('${(user.role.role)!""}','')}" />
 						
 						<span style="color:red" id="errMassage" class="text-danger font-weight-bold">${errMassage ! ""}</span><br>
 						<button type="submit" name="operation" value="Register" class="btn btn-success" form="Form" id="btn-submit" onclick="return validation(1);">

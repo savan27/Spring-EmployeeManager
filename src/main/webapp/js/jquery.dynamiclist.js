@@ -75,7 +75,7 @@
 
             if (length == settings.minSize){
             	alert("One Address required");
-                clearItem(item);
+                return;
             }
             else{
             	var result = confirm("Are you sure to delete?");

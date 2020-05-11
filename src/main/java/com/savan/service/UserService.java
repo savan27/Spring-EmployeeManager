@@ -2,6 +2,8 @@ package com.savan.service;
 
 import java.util.List;
 
+import com.savan.dto.AddressDto;
+import com.savan.dto.UserDto;
 import com.savan.genericService.GenericService;
 import com.savan.model.Address;
 import com.savan.model.User;
@@ -16,9 +18,15 @@ public interface UserService extends GenericService<User> {
 	public User getUser(String userName,String password);
 
 	//get all address list
-	public List<Integer> getAllAddresses(int userId);
+	public List<Address> getAllAddresses(int userId);
 
 	//update user
-	public boolean updateUser(User u);
+	public boolean updateUser(User u, UserDto userdto, AddressDto addressdto);
+
+	// fetch all user Data
+	public List<User> getAllUser();
+
+	//remove user 
+	public boolean removeUser(User user);
 	
 }

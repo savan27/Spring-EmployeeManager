@@ -1,6 +1,5 @@
 package com.savan.daoImpl;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.savan.dao.UserDao;
-import com.savan.model.Address;
 import com.savan.model.User;
 
 /**
@@ -57,8 +55,31 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public boolean updateUser(User u) {
+		try {
+			getSession().saveOrUpdate(u);
+			return true;
+		} catch (Exception e) {
+			System.out.println("User Update Fail...");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		return getSession().createQuery("from User").list();
+	}
+
+	@Override
+	public boolean removeUser(User user) {
 		
-		getSession().saveOrUpdate(u);
-		return false;
+		try {
+			getSession().delete(user);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("error in address deletion");
+			return false;
+		}
 	}
 }
