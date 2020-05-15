@@ -1,4 +1,4 @@
-	<html>
+<html>
 <head>
 <meta charset="UTF-8">
 <title>profile</title>
@@ -7,6 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/userprofile.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	
+	<#include "/header.ftl">
 
 </head>
 <body>
@@ -14,8 +16,9 @@
 	<!-- validate session -->
 	<#assign role = (Session.userRole)!"null"/>
 	<#if  role != "USER"  >
-	asdfghjk
-		  ${response.sendRedirect("login.ftl")!}
+		<script type="text/javascript">
+		    window.location.href = "login";
+		</script>
 	</#if>
 
 	<!-- User data display starts -->
@@ -203,6 +206,8 @@
 				</div>
 			</form>
 		</div>
+		
+		<#include "/footer.ftl">
 
 		<!-- script -->
 		<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>

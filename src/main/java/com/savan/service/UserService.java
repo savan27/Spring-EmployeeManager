@@ -28,5 +28,11 @@ public interface UserService extends GenericService<User> {
 
 	//remove user 
 	public boolean removeUser(User user);
+
+	//find the password
+	public String findPassword(String email);
+
+	//check user Existence 
+	public boolean checkUser(int userId, String email);
 	
 }

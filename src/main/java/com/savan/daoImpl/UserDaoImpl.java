@@ -82,4 +82,14 @@ public class UserDaoImpl implements UserDao {
 			return false;
 		}
 	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		
+		String HQL = " from User u where u.email =:email";
+		Query<User> q = getSession().createQuery(HQL);
+		q.setParameter("email", email);
+		
+		return  q.uniqueResult();
+	}
 }

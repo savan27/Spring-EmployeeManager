@@ -8,7 +8,7 @@ $(document).ready(function() {
 			//get button value
 			var data = $(this).val();
 			
-			//removing the row fromthe datatable
+			//removing the row from the data table
 			var a = $('#example6').DataTable();
 			a.row($(this).closest("tr")).remove();
 			$(this).closest("tr").remove();
@@ -36,14 +36,13 @@ $(document).ready(function() {
 		
 	});
 	
-	//Frogot Password
+	//Forgot Password
 	$("#forgotPassword").click(function() {
 		
 		$.ajax({
 			type : "POST",
-			url : "RegisterController",
+			url : "findPassword",
 			data : {
-				operation : 'forgotPassword',
 				userEmail : $("#userEmail").val()
 			},
 			success : function(data) {
@@ -55,5 +54,28 @@ $(document).ready(function() {
 		});
 		return false;
 	});	
+	
+	//Check user Existence 
+	$("#Email1").blur(function(){
+		
+		var email = $("#Email1").val();
+		var userId = $("#userId").val();
+		
+		$.ajax({
+			type : "POST",
+			url : "checkUserExistance",
+			data : {
+				userEmail : email,
+				userId : userId
+			},
+			success : function(data) {
+				$('#EmailExists').text(data);
+			},
+			error : function(data) {
+				$('#EmailExists').text("Some Thing Went Wrong with Email Id Please Try Again...!!");
+			}
+		});
+		
+	});
 	
 });

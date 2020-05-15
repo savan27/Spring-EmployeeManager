@@ -2,7 +2,6 @@ package com.savan.model;
 
 
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,6 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * @author SAVAN
@@ -31,18 +35,30 @@ public class User {
 	@Column(name = "user_id",length = 10)
 	private int id;
 	
+	@NotEmpty(message = "{NotNull.user.firstName}")
+	@Size(max = 20,min = 2)
+	@Pattern(regexp = "^[a-zA-Z]+$",message = "{Pattern.user.firstName}")
 	@Column(name = "first_name",nullable = false,length = 30)
 	private String firstName;
 
+	@NotEmpty(message = "{NotNull.user.lastName}")
+	@Size(max = 20,min = 2)
+	@Pattern(regexp = "^[a-zA-Z]+$",message = "{Pattern.user.lastName}")
 	@Column(name = "last_name",nullable = false,length = 30)
 	private String lastName;
 	
+	@NotEmpty
 	@Column(name = "password",nullable = false,length = 30)
 	private String password;
 	
+	@NotEmpty(message = "{NotNull.user.email}")
+	@Email(message = "{Invalid.user.email}")
 	@Column(name = "email",nullable = false,length = 30,unique = true)
 	private String email;
 	
+	@NotEmpty(message = "{NotNull.user.Contact}")
+	@Size(min = 10,max = 10)
+	@Pattern(regexp = "(^[0-9]{10})",message = "{Pattern.user.Contact}")
 	@Column(name = "contact",nullable = false,length = 10)
 	private String contact;
 	
@@ -62,6 +78,8 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
+	@NotEmpty
+	@Valid
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user",orphanRemoval = true,fetch = FetchType.EAGER,targetEntity = Address.class)
 	private List<Address> address;
 

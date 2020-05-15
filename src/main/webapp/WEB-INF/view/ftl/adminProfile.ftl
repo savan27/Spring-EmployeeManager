@@ -1,7 +1,24 @@
-		<!-- css -->
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
-		<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap4.min.css" >
+<html>
+<head>
+<meta charset="UTF-8">
+<title>profile</title>
 
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" >
+	<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap4.min.css" >
+	
+	<#include "/header.ftl">
+
+</head>
+<body>		
+		<!-- validate session -->
+		<#assign role = (Session.userRole)!"null"/>
+		<#if  role != "ADMIN"  >
+			<script type="text/javascript">
+			    window.location.href = "login";
+			</script>
+		</#if>
+		
 		<div class="container">
 			<table id="example" class="table table-striped " style="width:100%;">
 				<thead>
@@ -39,6 +56,8 @@
 			</table>
 		</div>
 
+		<#include "/footer.ftl">
+
 		<!-- Script -->
 		<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 		<script type="text/javascript" src="js/popper.min.js"></script>
@@ -48,5 +67,6 @@
 		<script type="text/javascript" src="js/dataTable.js"></script>
 		<script type="text/javascript" src="js/ajax.js"></script>
 		<script type="text/javascript" src="js/valid.js"></script>
-
-	<!-- Admin profile section ends -->
+		
+</body>
+</html>		

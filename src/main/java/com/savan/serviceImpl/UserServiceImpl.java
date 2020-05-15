@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-import javax.jws.soap.SOAPBinding.Use;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -165,6 +163,41 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean removeUser(User user) {
 		return userDao.removeUser(user);
+	}
+
+	@Override
+	public String findPassword(String email) {
+		
+		//get user from email
+		User user = userDao.getUserByEmail(email);
+		
+		if (user != null ) {
+			String password = user.getPassword();
+			return password;
+		}
+		
+		return null;
+	}
+
+	@Override
+	public boolean checkUser(int userId, String email) {
+		
+		//get user from email
+		User user = userDao.getUserByEmail(email);
+		
+		//check user updating 
+		if(user != null) {
+			
+			if(user.getId() == userId) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
 	}
 
 }

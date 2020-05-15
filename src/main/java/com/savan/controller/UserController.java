@@ -2,25 +2,24 @@ package com.savan.controller;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.savan.dto.AddressDto;
 import com.savan.dto.UserDto;
-import com.savan.model.Address;
 import com.savan.model.User;
-import com.savan.service.RoleService;
 import com.savan.service.UserService;
 
 
@@ -31,6 +30,9 @@ import com.savan.service.UserService;
  */
 @Controller
 public class UserController {
+	
+	//logger initialization 
+	private Logger logger = Logger.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
@@ -40,38 +42,49 @@ public class UserController {
 		return "register";
 	}
 	
-	@GetMapping("/userLogin")
+	@GetMapping("/userprofile")
 	public String profile(HttpSession session, Model m) {
 		
-		int userId = (int) session.getAttribute("userId");
+		//getting user roleuserLogin
+		String userRole = (String) session.getAttribute("userRole");
 		
-		//remove userId from session
-		//session.removeAttribute("userId");
-		
-		//adding userRole to session
-		session.setAttribute("userRole", "USERR");
-		
-		//getting user data from the database
-		User u = userService.getById(userId);
-
-		// Converting Image to Base64 String
-		if (u.getProfilePicture() != null) {
+		//validate session
+		if (userRole != null && userRole.contentEquals("USER")) {
 			
-			//image byte[] to Base64String 
-			String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
+			//getting user id from user
+			int userId = (int) session.getAttribute("userId");
 			
-			m.addAttribute("profilePicture", base64Image);
+			//getting user data from the database
+			User u = userService.getById(userId);
+			
+			// Converting Image to Base64 String
+			if (u.getProfilePicture() != null) {
+				
+				//image byte[] to Base64String 
+				String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
+				
+				m.addAttribute("profilePicture", base64Image);
+			}
+			
+			// add user object to model
+			m.addAttribute("user", u);
+			
+			return "userProfile";
 		}
-
-		// add user object to model
-		m.addAttribute("user", u);
-		
-		return "userProfile";
+		else {
+			return "redirect:/login";
+		}
 	}
 
 	@PostMapping("/registerUser")
-	public String registerUser(User u,AddressDto address ,@RequestParam("File") MultipartFile File) {
-
+	public String registerUser(@Valid User u,BindingResult result,AddressDto address,@RequestParam("File") MultipartFile File,Model m) {
+		
+		//validating user data 
+		if (result.hasErrors()) {
+			m.addAttribute("error", result);
+			return "register";
+		}
+		
 		// setting image as byte[]
 		try {
 			if (File != null && File.getSize() > 0) {
@@ -94,7 +107,7 @@ public class UserController {
 		
 		//save user 
 		if (userService.save(u)) {
-			System.out.println("User Insertion SuccessFull");
+			logger.info("User Insertion SuccessFull...");
 		}
 
 		return "login";
@@ -102,32 +115,59 @@ public class UserController {
 
 	@GetMapping("/doUpdateUser")
 	public String doupdateUser(@RequestParam("id") int id, Model m) {
-
+		
 		// get the user data
 		 User u = userService.getById(id);
-
+		 
 		// Converting Image to Base64 String
-		String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
-
+		if (u.getProfilePicture() != null) { 
+			String base64Image = Base64.getEncoder().encodeToString(u.getProfilePicture());
+			m.addAttribute("profilePicture", base64Image);
+		}
+		else {
+			logger.info("User with id "+ u.getId()+ " has no image available at update time...");
+		}
+		
 		m.addAttribute("user", u);
-		m.addAttribute("profilePicture", base64Image);
+		m.addAttribute("userUpdate", "updateUser");
 		return "register";
 	}
 	
 	@PostMapping("/afterUserUpdate")
-	public String afterUserUpdate(User u,UserDto userdto,AddressDto addressdto) {
+	public String afterUserUpdate(@Valid User u,BindingResult result,UserDto userdto,AddressDto addressdto,Model m) {
 		
-		System.out.println(userdto.getUserRole());
+		// validating user data
+		if (result.hasErrors()) {
+			m.addAttribute("error", result);
+			return "register";
+		}
 		
 		//update user
 		if (userService.updateUser(u,userdto,addressdto)) {
-			System.out.println("User is Updated Successfully...");
+			logger.info("User is Updated Successfully...");
+		}
+		else {
+			logger.error("Fail to Update User");
 		}
 		
-		if (userdto.getUserRole().contentEquals("Admin")) {
-			return "redirect:/adminLogin";
+		if (userdto.getUserRole().contentEquals("ADMIN")) {
+			return "redirect:/adminprofile";
 		}
 
-		return "doUpdateUser?id=27";
+		return "redirect:/userprofile";
+	}
+	
+	@PostMapping("/checkUserExistance")
+	@ResponseBody
+	public String checkUserExistance(@RequestParam("userEmail")String email,@RequestParam("userId")int userId) {
+		
+		boolean isUserExists = userService.checkUser(userId,email);
+		
+		if (isUserExists) {
+			return "";
+		}
+		else {
+			return "Email Already Exists...";
+		}
 	}
 }

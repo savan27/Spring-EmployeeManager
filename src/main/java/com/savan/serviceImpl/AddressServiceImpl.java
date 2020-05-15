@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.savan.dao.AddressDao;
-import com.savan.dto.AddressDto;
-import com.savan.dto.UserDto;
 import com.savan.model.Address;
 import com.savan.service.AddressService;
 

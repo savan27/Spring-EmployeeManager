@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,21 +23,34 @@ import com.savan.service.UserService;
 @Controller
 public class AdminController {
 	
+	//logger initialization 
+	private Logger logger = Logger.getLogger(AdminController.class);
+	
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/adminLogin")
+	@GetMapping("/adminprofile")
 	public String adminLogin(HttpSession session,Model m) {
 		
-		//setting userRole to session
-		session.setAttribute("userRole", "ADMIN");
+		//getting user role
+		String userRole = (String) session.getAttribute("userRole");
 		
-		// user data to display
-		List<User> userList = userService.getAllUser();
-
-		m.addAttribute("userDetail", userList);
-
-		return "adminProfile";
+		//validate session
+		if (userRole != null && userRole.contentEquals("ADMIN")) {
+		
+			//remove userId from session
+			session.removeAttribute("userId");
+			
+			// user data to display
+			List<User> userList = userService.getAllUser();
+	
+			m.addAttribute("userDetail", userList);
+	
+			return "adminProfile";
+		}
+		else {
+			return "redirect:/login";
+		}
 	}
 	
 	@PostMapping("removeUser")

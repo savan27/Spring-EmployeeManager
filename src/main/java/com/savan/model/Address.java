@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * @author SAVAN
@@ -22,21 +25,37 @@ public class Address {
 	@Column(name = "address_id")
 	private int id;
 	
+	@NotEmpty(message = "{NotNull.address.home}")
+	@Size(max = 30,min = 5)
 	@Column(name = "home",nullable = false,length = 30)
 	private String home;
 	
+	@NotEmpty(message = "{NotNull.address.street}")
+	@Size(max = 30,min = 5)
 	@Column(name = "street",nullable = false,length = 30)
 	private String street;
 	
+	@NotEmpty(message = "{NotNull.address.city}")
+	@Size(max = 10,min = 5)
+	@Pattern(regexp = "^[a-zA-Z]+$",message = "{Pattern.user.city}")
 	@Column(name = "city",nullable = false,length = 10)
 	private String city;
 	
+	@NotEmpty(message = "{NotNull.address.state}")
+	@Size(max = 10,min = 5)
+	@Pattern(regexp = "^[a-zA-Z]+$",message = "{Pattern.user.state}")
 	@Column(name = "state",nullable = false,length = 10)
 	private String state;
 	
+	@NotEmpty(message = "{NotNull.address.country}")
+	@Size(max = 10,min = 4)
+	@Pattern(regexp = "^[a-zA-Z]+$",message = "{Pattern.user.country}")
 	@Column(name = "country",nullable = false,length = 10)
 	private String country;
 	
+	@NotEmpty(message = "{NotNull.address.zipcode}")
+	@Size(max = 6,min = 6)
+	@Pattern(regexp = "(^[0-9]{6})",message = "{Pattern.user.zipcode}")
 	@Column(name = "zipcode",nullable = false,length = 10)
 	private String zipcode;
 	

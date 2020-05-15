@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
 </head>
 <body>
 
@@ -35,7 +36,7 @@
 							<input type="password" name="password" class="form-control" autocomplete="off">
 						</div>
 
-						<span>${loginErr ! ""}</span>
+						<span>${(RequestParameters.loginErr)!""}</span>
 						<div class="row">
 							<div class="col-4">
 								<button type="submit" name="login" class="btn btn-success">

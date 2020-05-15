@@ -34,7 +34,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 		servletContext.addListener(contextLoaderListener);
 
-
 		// Filter.
 		FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
 
@@ -59,5 +58,4 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	protected String[] getServletMappings() {
 		return new String [] {"/"};
 	}
-
 }

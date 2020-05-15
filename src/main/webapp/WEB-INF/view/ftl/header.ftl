@@ -18,7 +18,7 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active">
-						<form action="LogoutController" method="post">
+						<form action="logout" method="post">
 							<input type="submit" class="btn btn-light" value="Logout">
 						</form>
 					</li>

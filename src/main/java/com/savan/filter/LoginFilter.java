@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -40,6 +41,7 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
+		
 		String userName =  request.getParameter("userName");
 		String password =  request.getParameter("password");
 		
@@ -48,15 +50,21 @@ public class LoginFilter implements Filter {
 			User u = userService.getUser(userName, password);
 			
 			if (u != null) {
-				request.setAttribute("user", u.getId());
+				request.setAttribute("userId", u.getId());
 				request.setAttribute("userRole", u.getRole().getRole());
 				chain.doFilter(request, response);
 			} else {
-				System.out.println("good");
+				request.setAttribute("loginErr", "*Invalid credentials");
+				
+				RequestDispatcher rd = request.getRequestDispatcher("/");
+				rd.forward(request, response);
 			}
 		}
 		else {
-			System.out.println("very Good");
+			request.setAttribute("loginErr", "*Invalid credentials");
+
+			RequestDispatcher rd = request.getRequestDispatcher("/");
+			rd.forward(request, response);
 		}
 	}
 }
