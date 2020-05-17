@@ -24,9 +24,11 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 		
 		AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
 		appContext.register(SpringConfig.class);
-
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("SpringDispatcher",
-		new DispatcherServlet(appContext));
+		
+		DispatcherServlet dispatcherServlet = new DispatcherServlet(appContext);
+		dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+		
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("SpringDispatcher",dispatcherServlet);
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
 

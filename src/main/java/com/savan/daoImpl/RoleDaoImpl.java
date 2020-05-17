@@ -27,6 +27,7 @@ public class RoleDaoImpl implements RoleDao {
 	}
 
 	// method to count number of rows
+	@SuppressWarnings("rawtypes")
 	@Override
 	public int countRows() {
 		try {
@@ -53,6 +54,7 @@ public class RoleDaoImpl implements RoleDao {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Role findByRole(String roleName) {
 		

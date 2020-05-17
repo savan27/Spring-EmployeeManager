@@ -22,8 +22,6 @@ public class ClearCacheFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		System.out.println("Insid Logout filter");
-		
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpServletRequest req =  (HttpServletRequest) request;
 		

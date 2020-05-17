@@ -43,6 +43,7 @@ public class UserDaoImpl implements UserDao {
 		return getSession().get(User.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUser(String userName, String password) {
 
@@ -65,6 +66,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAllUser() {
 		return getSession().createQuery("from User").list();
@@ -83,6 +85,7 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public User getUserByEmail(String email) {
 		

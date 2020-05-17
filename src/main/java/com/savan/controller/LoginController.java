@@ -3,7 +3,8 @@ package com.savan.controller;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ import com.savan.service.UserService;
 public class LoginController {
 	
 	//logger initialization 
-	private Logger logger = Logger.getLogger(LoginController.class);
+	private Logger logger = LogManager.getLogger(LoginController.class);
 	
 	@Autowired
 	private RoleService rolesrvice;
