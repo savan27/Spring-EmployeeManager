@@ -57,8 +57,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Address> getAllAddresses(int userId) {
 		
+		//user all info.
 		User u = userDao.getById(userId);
 		
+		//list of all available addresses
 		List<Address> existingAddressIds = new ArrayList<Address>();
 		
 		u.getAddress().stream().forEach(addId ->{
@@ -75,8 +77,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			MultipartFile file = userdto.getFile();
 			if (file != null && file.getSize() > 0) {
-				byte[] fileImage = file.getBytes();
-				u.setProfilePicture(fileImage);
+				u.setProfilePicture(file.getBytes());
 			} else {
 				byte[] Image = Base64.getDecoder().decode(userdto.getProfile());
 				u.setProfilePicture(Image);
@@ -85,13 +86,13 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 		
-		// set user id
+		// setting user id
 		u.setId(userdto.getUserId());
 
-		// set user Role
+		// setting user Role
 		u.setRole(roleService.findByRole(userdto.getUserRole()));
 		
-		//get all existing address id's of user
+		//get all existing addresses of user
 		List<Address> addressList = getAllAddresses(userdto.getUserId());
 		
 		// list of existing address id's
@@ -133,6 +134,7 @@ public class UserServiceImpl implements UserService {
 		//complete user information
 		List<User> userlist = userDao.getAllUser();
 		
+		//Particular info. to display
 		List<User> displayinfo = new ArrayList<User>();
 		
 		

@@ -1,4 +1,4 @@
-	<h3>Some Thing Went Wrong<h3>
+	<h3 >Some Thing Went Wrong<h3>
  	Please login again to continue...
 
      <form action="logout" method="post">

@@ -17,7 +17,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -52,7 +51,6 @@ public class User {
 	private String password;
 	
 	@NotEmpty(message = "{NotNull.user.email}")
-	@Email(message = "{Invalid.user.email}")
 	@Column(name = "email",nullable = false,length = 30,unique = true)
 	private String email;
 	

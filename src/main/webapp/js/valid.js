@@ -165,7 +165,7 @@ function validation(id) {
 }
 
 function imageValidate(file) {
-
+	
 	// Get The File
 	var fuData = document.getElementById('File');
 	//get file name
@@ -631,7 +631,7 @@ function CityValidate(id) {
 		document.getElementById(id+'.CityError').innerHTML="* Required Field !!!";
 		return false;
 	}
-	if ((v.length < 5) || (v.length >= 10)) {
+	if ((v.length < 4) || (v.length >= 10)) {
 		document.getElementById(id+'.CityError').innerHTML = "* Length should be 5 to 10 character !!!";
 		return false;
 	}
@@ -679,7 +679,7 @@ function StateValidate(id) {
 		document.getElementById(id+'.StateError').innerHTML="* Required Field !!!";
 		return false;
 	}
-	if ((v.length < 5) || (v.length >= 10)) {
+	if ((v.length < 4) || (v.length >= 10)) {
 		document.getElementById(id+'.StateError').innerHTML = "* Length should be 5 to 10 character !!!";
 		return false;
 	}
@@ -767,7 +767,7 @@ function ZipCodeValidate(id) {
 		document.getElementById(id+'.ZipCodeError').innerHTML="* Invalid : Space between Number...!!!";
 		return false;
 	}
-	else if ((v.length <= 5) || (v.length > 10)) {
+	else if ((v.length < 6) || (v.length > 6)) {
 		document.getElementById(id+'.ZipCodeError').innerHTML = "* Length should be 6 to 10 digits only....!!!";
 		return false;
 	}

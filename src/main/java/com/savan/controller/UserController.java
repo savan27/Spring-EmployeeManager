@@ -89,8 +89,7 @@ public class UserController {
 		// setting image as byte[]
 		try {
 			if (File != null && File.getSize() > 0) {
-				byte[] image = File.getBytes();
-				u.setProfilePicture(image);
+				u.setProfilePicture(File.getBytes());
 			}
 		} 
 		catch (IOException e) {
@@ -130,7 +129,10 @@ public class UserController {
 		}
 		
 		m.addAttribute("user", u);
+		m.addAttribute("userId", u.getId());
+		m.addAttribute("userRole", u.getRole().getRole());
 		m.addAttribute("userUpdate", "updateUser");
+		
 		return "register";
 	}
 	
@@ -139,7 +141,24 @@ public class UserController {
 		
 		// validating user data
 		if (result.hasErrors()) {
+			
 			m.addAttribute("error", result);
+			m.addAttribute("userId", userdto.getUserId());
+			m.addAttribute("userRole", userdto.getUserRole());
+			m.addAttribute("userUpdate", "updateUser");
+			// Manipulation of profile picture
+			try {
+				MultipartFile file = userdto.getFile();
+				if (file != null && file.getSize() > 0) {
+					String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+					m.addAttribute("profilePicture", base64Image);
+				} else {
+					m.addAttribute("profilePicture", userdto.getProfile());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			return "register";
 		}
 		

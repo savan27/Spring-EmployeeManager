@@ -77,7 +77,7 @@ public class HibernateConfig {
 	}
 
 	/**
-	 * Initialize hibernate properties 
+	 * Initialize Hibernate properties 
 	 * @return Properties
 	 */
 	private final Properties hibernateProperties() {

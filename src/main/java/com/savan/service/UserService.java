@@ -17,7 +17,7 @@ public interface UserService extends GenericService<User> {
 	//get user from login credential 
 	public User getUser(String userName,String password);
 
-	//get all address list
+	//get all address list as addressId
 	public List<Address> getAllAddresses(int userId);
 
 	//update user

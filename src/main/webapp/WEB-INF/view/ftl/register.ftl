@@ -26,9 +26,11 @@
 				<div class="col-md-8 m-auto d-block">
 					<h1 class="text-success text-center">
 					<#if (userUpdate?has_content) >
-						${(user?has_content)?string('Update User Profile','Registration Form')}
+						Update User Profile
 						<#assign url = "afterUserUpdate" />
 						<#assign buttonName = "Update" />
+						<#assign userId = (userId)!"null" />
+						<#assign userRole = (userRole)!"null" />
 					<#else>
 						Registration Form
 						<#assign url = "registerUser" />
@@ -298,8 +300,8 @@
 						</div>       
 						<br/>
 						<#-- user data to manage updatation -->
-						<input type="hidden" name="userId" id="userId" value="${(user?has_content)?string('${(user.id)!""}','0')}" />
-						<input type="hidden" name="userRole" value="${(user?has_content)?string('${(user.role.role)!""}','')}" />
+						<input type="hidden" name="userId" id="userId" value="${(userId)!"0"}" />
+						<input type="hidden" name="userRole" value="${(userRole)!""}" />
 						
 						<button type="submit" name="operation" value="Register" class="btn btn-success" form="Form" id="btn-submit" onclick="return validation(1);">
 							${buttonName}
