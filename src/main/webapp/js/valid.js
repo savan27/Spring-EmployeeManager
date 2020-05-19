@@ -164,31 +164,6 @@ function validation(id) {
 		
 }
 
-function imageValidate(file) {
-	
-	// Get The File
-	var fuData = document.getElementById('File');
-	//get file name
-    var FileUploadPath = fuData.value;
-    //get file ectension
-    var Extension = FileUploadPath.substring(FileUploadPath.lastIndexOf('.') + 1).toLowerCase();
-    //get file size
-	var FileSize = file.files[0].size / 1024 / 1024;
-	
-    if (!(Extension == "gif" || Extension == "png" || Extension == "bmp"|| Extension == "jpeg" || Extension == "jpg")) {
-    	document.getElementById('FileError').innerHTML = "**Image Input Only..!!";
-        return false;
-    }
-    if (FileSize > 2) {
-        document.getElementById('FileError').innerHTML = "**File size exceeds 2 MB, Please Try Another One..!!";
-        return false;
-    } 
-    else {
-    	document.getElementById('FileError').innerHTML = "";
-    }
-	
-}
-
 function Addressvalidate(id) {
 	
 	var house = document.getElementById('house'+id).value;
